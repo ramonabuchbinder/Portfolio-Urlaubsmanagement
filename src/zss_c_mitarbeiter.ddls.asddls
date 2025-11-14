@@ -22,5 +22,10 @@ as projection on Zss_R_Mitarbeiter
       CreatedBy,
       CreatedAt,
       LastChangedBy,
-      LastChangedAt
+      LastChangedAt,
+      
+    /* Associations */
+    _Antrag : redirected to composition child Zss_C_Antrag,
+    _Anspruch : redirected to composition child Zss_C_Anspruch
+    
 }
