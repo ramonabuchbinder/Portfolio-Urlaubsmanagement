@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service Definition Mitarbeiter'
+define service ZSS_UI_Mitarbeiter {
+  expose Zss_C_Mitarbeiter as Mitarbeiter;
+}

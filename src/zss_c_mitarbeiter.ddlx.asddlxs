@@ -1,0 +1,56 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo:
+{
+  typeNamePlural: 'Mitarbeiter',
+  typeName: 'Mitarbeiter',
+  title.value: 'Mitarbeiternummer',
+  description.value: 'Mitarbeiternummer'
+}
+
+annotate view Zss_C_Mitarbeiter with
+{
+
+ /* Facets */
+  @UI.facet:
+  [
+    { position: 10, targetQualifier: 'Mitarbeiterdaten', label: 'Mitarbeiterdaten', type: #FIELDGROUP_REFERENCE },
+    { position: 20, targetQualifier: 'AdminData', label: 'Administrative Data', type: #FIELDGROUP_REFERENCE }
+  ]
+  
+   /* Fields */
+  @UI.fieldGroup: [{ position: 10, qualifier: 'Admindaten' }]
+  IDUUID;
+
+  @UI.lineItem: [{ position: 10 }]
+  @UI.fieldGroup: [{ position: 10, qualifier: 'Mitarbeiterdaten' }]
+  Mitarbeiternummer;
+
+  @UI.lineItem: [{ position: 20 }]
+  @UI.selectionField: [{ position: 10 }]
+  @UI.fieldGroup: [{ position: 20, qualifier: 'Mitarbeiterdaten' }]
+  Vorname;
+
+  @UI.lineItem: [{ position: 30 }]
+  @UI.selectionField: [{ position: 20 }]
+  @UI.fieldGroup: [{ position: 30, qualifier: 'Mitarbeiterdaten' }]
+  Nachname;
+
+  @UI.lineItem: [{ position: 40 }]
+  @UI.selectionField: [{ position: 30 }]
+  @UI.fieldGroup: [{ position: 40, qualifier: 'Mitarbeiterdaten' }]
+  Eintrittsdatum;
+
+
+  @UI.fieldGroup: [{ position: 20, qualifier: 'AdminData' }]
+  CreatedBy;
+
+  @UI.fieldGroup: [{ position: 30, qualifier: 'AdminData' }]
+  CreatedAt;
+
+  @UI.fieldGroup: [{ position: 40, qualifier: 'AdminData' }]
+  LastChangedBy;
+
+  @UI.fieldGroup: [{ position: 50, qualifier: 'AdminData' }]
+  LastChangedAt;
+
+}
