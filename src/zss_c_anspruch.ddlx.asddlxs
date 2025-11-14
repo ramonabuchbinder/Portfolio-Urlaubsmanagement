@@ -1,0 +1,33 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo:
+{
+  typeName: 'Anspruch',
+  typeNamePlural: 'Ansprüche',
+  title.value: 'MitarbeiterUuid',
+  description.value: 'MitarbeiterUuid'
+}
+annotate view Zss_C_Anspruch with
+{
+
+  /* Facets */
+  @UI.facet:
+  [
+    { position: 10, targetQualifier: 'Anspruchsdaten', label: 'Anspruchsdaten', type: #FIELDGROUP_REFERENCE },
+    { position: 20, targetQualifier: 'AdminData', label: 'Administrative Data', type: #FIELDGROUP_REFERENCE }
+  ]
+
+  /* Fields */
+  @UI.lineItem: [{ position: 10 }]
+  @UI.fieldGroup: [{ position: 10, qualifier: 'Antragsdaten' }]
+  MitarbeiterUuid;
+
+  @UI.lineItem: [{ position: 20 }]
+  @UI.fieldGroup: [{ position: 20, qualifier: 'Antragsdaten' }]
+  Jahr;
+
+  @UI.lineItem: [{ position: 30 }]
+  @UI.fieldGroup: [{ position: 30, qualifier: 'Antragsdaten' }]
+  Urlaubstage;
+
+
+}

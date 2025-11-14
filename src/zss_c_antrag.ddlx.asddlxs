@@ -1,0 +1,48 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo:
+{
+  typeName: 'Antrag',
+  typeNamePlural: 'Anträge',
+  title.value: 'AntragstellerUuid',
+  description.value: 'AntragstellerUuid'
+}
+annotate view Zss_C_Antrag with
+{
+
+  /* Facets */
+  @UI.facet:
+  [
+    { position: 10, targetQualifier: 'Antragsdaten', label: 'Antragsdaten', type: #FIELDGROUP_REFERENCE },
+    { position: 20, targetQualifier: 'AdminData', label: 'Administrative Data', type: #FIELDGROUP_REFERENCE }
+  ]
+
+  /* Fields */
+  @UI.lineItem: [{ position: 10 }]
+  @UI.fieldGroup: [{ position: 10, qualifier: 'Anspruchsdaten' }]
+  AntragstellerUuid;
+
+  @UI.lineItem: [{ position: 20 }]
+  @UI.fieldGroup: [{ position: 20, qualifier: 'Anspruchsdaten' }]
+  GenehmigenderUuid;
+
+  @UI.lineItem: [{ position: 30 }]
+  @UI.fieldGroup: [{ position: 30, qualifier: 'Anspruchsdaten' }]
+  Startdatum;
+  
+  @UI.lineItem: [{ position: 40 }]
+  @UI.fieldGroup: [{ position: 40, qualifier: 'Anspruchsdaten' }]
+  Enddatum;
+  
+  @UI.lineItem: [{ position: 50 }]
+  @UI.fieldGroup: [{ position: 50, qualifier: 'Anspruchsdaten' }]
+  Urlaubstage;
+  
+  @UI.lineItem: [{ position: 60 }]
+  @UI.fieldGroup: [{ position: 60, qualifier: 'Anspruchsdaten' }]
+  Kommentar;
+  
+  @UI.lineItem: [{ position: 70 }]
+  @UI.fieldGroup: [{ position: 70, qualifier: 'Anspruchsdaten' }]
+  Status;
+
+}

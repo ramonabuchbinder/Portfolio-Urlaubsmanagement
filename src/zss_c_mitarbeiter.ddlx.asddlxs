@@ -14,7 +14,9 @@ annotate view Zss_C_Mitarbeiter with
   @UI.facet:
   [
     { position: 10, targetQualifier: 'Mitarbeiterdaten', label: 'Mitarbeiterdaten', type: #FIELDGROUP_REFERENCE },
-    { position: 20, targetQualifier: 'AdminData', label: 'Administrative Data', type: #FIELDGROUP_REFERENCE }
+    { position: 20, targetQualifier: 'AdminData', label: 'Administrative Data', type: #FIELDGROUP_REFERENCE },
+    { position: 30, targetElement: '_Anspruch', label: 'Ansprüche', type: #LINEITEM_REFERENCE },
+    { position: 40, targetElement: '_Antrag', label: 'Anträge', type: #LINEITEM_REFERENCE }
   ]
   
    /* Fields */

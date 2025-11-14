@@ -1,5 +1,6 @@
 @EndUserText.label: 'Projection View Mitarbeiter'
 @AccessControl.authorizationCheck: #NOT_REQUIRED
+@Metadata.allowExtensions: true
 define view entity Zss_C_Antrag as projection on Zss_R_Antrag
 {
     key IDUUID,
