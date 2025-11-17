@@ -7,13 +7,17 @@ provider contract transactional_query
 as projection on Zss_R_Mitarbeiter
 {
     key IDUUID,
+    @Consumption.valueHelpDefinition: [{ entity: { name: 'Zss_I_Genehmigender', element: 'Mitarbeiternummer' } }]
   Mitarbeiternummer,
   @Search.defaultSearchElement: true      
   @Search.fuzzinessThreshold: 0.7
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'Zss_I_Genehmigender', element: 'Vorname' } }]
   Vorname,
   @Search.defaultSearchElement: true      
   @Search.fuzzinessThreshold: 0.7
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'Zss_I_Genehmigender', element: 'Nachname' } }]
   Nachname,
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'Zss_I_Genehmigender', element: 'Eintrittsdatum' } }]
   Eintrittsdatum,
   
       
