@@ -28,6 +28,9 @@ as projection on Zss_R_Mitarbeiter
       LastChangedBy,
       LastChangedAt,
       
+    /* Transient Data */
+    GenehmigenderName,
+      
     /* Associations */
     _Antrag : redirected to composition child Zss_C_Antrag,
     _Anspruch : redirected to composition child Zss_C_Anspruch
