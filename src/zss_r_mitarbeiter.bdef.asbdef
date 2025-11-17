@@ -1,0 +1,40 @@
+managed implementation in class zss_bp_mitarbeiter unique;
+strict ( 2 );
+
+define behavior for Zss_R_Mitarbeiter //alias <alias_name>
+persistent table zss_mitarbeiter
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create ( authorization : global );
+  update;
+  delete;
+  field ( readonly ) IDUUID;
+  association _Anspruch { create; }
+  association _Antrag { create; }
+}
+
+define behavior for Zss_R_Anspruch //alias <alias_name>
+persistent table zss_urlaubsanspr
+lock dependent by _Mitarbeiter
+authorization dependent by _Mitarbeiter
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly ) MitarbeiterUUID;
+  association _Mitarbeiter;
+}
+
+define behavior for Zss_R_Antrag //alias <alias_name>
+persistent table zss_urlaubsantr
+lock dependent by _Mitarbeiter
+authorization dependent by _Mitarbeiter
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly ) AntragstellerUUID;
+  association _Mitarbeiter;
+}

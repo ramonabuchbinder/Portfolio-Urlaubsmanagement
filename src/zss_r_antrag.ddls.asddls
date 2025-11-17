@@ -2,7 +2,7 @@
 @EndUserText.label: 'Travel'
 define view entity Zss_R_Antrag
   as select from zss_urlaubsantr
-  association to parent Zss_R_Mitarbeiter as _Mitarbeiter on $projection.IDUUID = _Mitarbeiter.IDUUID
+  association to parent Zss_R_Mitarbeiter as _Mitarbeiter on $projection.AntragstellerUuid = _Mitarbeiter.IDUUID
   
 {
 

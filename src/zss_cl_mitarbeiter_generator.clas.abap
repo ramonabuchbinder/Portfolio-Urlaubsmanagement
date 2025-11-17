@@ -9,7 +9,11 @@ CLASS zss_cl_mitarbeiter_generator DEFINITION
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS zss_cl_mitarbeiter_generator IMPLEMENTATION.
+
+
+CLASS ZSS_CL_MITARBEITER_GENERATOR IMPLEMENTATION.
+
+
   METHOD if_oo_adt_classrun~main.
     DATA ls_mitarbeiter TYPE zss_mitarbeiter.
     DATA lt_mitarbeiter TYPE TABLE OF zss_mitarbeiter.
