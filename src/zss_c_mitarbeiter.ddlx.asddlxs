@@ -19,6 +19,10 @@ annotate view Zss_C_Mitarbeiter with
     { position: 40, targetElement: '_Antrag', label: 'Anträge', type: #LINEITEM_REFERENCE }
   ]
   
+  /* Actions */
+  
+  @UI.lineItem: [{ position: 10, dataAction: 'keineUrlaubstage', label: 'keineUrlaubstage', type: #FOR_ACTION }]
+  
    /* Fields */
   @UI.fieldGroup: [{ position: 10, qualifier: 'Admindaten' }]
   IDUUID;

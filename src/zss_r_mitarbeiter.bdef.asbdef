@@ -13,6 +13,13 @@ authorization master ( instance )
   field ( readonly ) IDUUID;
   association _Anspruch { create; }
   association _Antrag { create; }
+
+  static action datumsvalidierung;
+  static action keineUrlaubstage;
+
+  validation ValidateDates on save {create;}
+
+
 }
 
 define behavior for Zss_R_Anspruch //alias <alias_name>
@@ -25,6 +32,8 @@ authorization dependent by _Mitarbeiter
   delete;
   field ( readonly ) MitarbeiterUUID;
   association _Mitarbeiter;
+
+  field (readonly, numbering : managed) iduuid;
 }
 
 define behavior for Zss_R_Antrag //alias <alias_name>
@@ -37,4 +46,9 @@ authorization dependent by _Mitarbeiter
   delete;
   field ( readonly ) AntragstellerUUID;
   association _Mitarbeiter;
+
+
+  field (readonly, numbering : managed) iduuid;
+  field (mandatory : create) GenehmigenderUuid, Startdatum, Enddatum, Urlaubstage, Kommentar;
+
 }
