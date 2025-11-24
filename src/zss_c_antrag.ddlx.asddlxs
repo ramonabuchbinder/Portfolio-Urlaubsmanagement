@@ -21,6 +21,7 @@ annotate view Zss_C_Antrag with
   AntragstellerUuid;
 
   @UI.lineItem: [{ position: 20 }]
+  @UI.selectionField: [{ position: 20 }]
   @UI.fieldGroup: [{ position: 20, qualifier: 'Antragsdaten' }]
   GenehmigenderUuid;
 
@@ -43,5 +44,9 @@ annotate view Zss_C_Antrag with
   @UI.lineItem: [{ position: 70 }]
   @UI.fieldGroup: [{ position: 70, qualifier: 'Antragsdaten' }]
   Status;
+  
+  @UI.lineItem: [{ position: 80 }]
+  @UI.fieldGroup: [{ position: 80, qualifier: 'Antragsdaten' }]
+  Beschreibung;
 
 }

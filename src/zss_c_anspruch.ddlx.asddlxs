@@ -28,6 +28,18 @@ annotate view Zss_C_Anspruch with
   @UI.lineItem: [{ position: 30 }]
   @UI.fieldGroup: [{ position: 30, qualifier: 'Anspruchsdaten' }]
   Urlaubstage;
+  
+  @UI.lineItem: [{ position: 40 }]
+  @UI.fieldGroup: [{ position: 40, qualifier: 'Anspruchsdaten' }]
+  VerfuegbareUrlaubstage;
+
+  @UI.lineItem: [{ position: 50 }]
+  @UI.fieldGroup: [{ position: 50, qualifier: 'Anspruchsdaten' }]
+  VerbrauchteUrlaubstage;
+
+  @UI.lineItem: [{ position: 60 }]
+  @UI.fieldGroup: [{ position: 60, qualifier: 'Anspruchsdaten' }]
+  GeplanteUrlaubstage;
 
 
 }

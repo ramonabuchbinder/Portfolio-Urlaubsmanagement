@@ -8,16 +8,21 @@ CLASS lhc_Zss_R_Mitarbeiter DEFINITION INHERITING FROM cl_abap_behavior_handler.
       IMPORTING REQUEST requested_authorizations FOR Zss_R_Mitarbeiter RESULT result.
 
     METHODS datumsvalidierung FOR MODIFY
-        IMPORTING keys FOR ACTION ZSS_R_Antrag~datumsvalidierung.
+      IMPORTING keys FOR ACTION ZSS_R_Antrag~datumsvalidierung.
 
     METHODS keineUrlaubstage FOR MODIFY
-        IMPORTING keys FOR ACTION ZSS_R_Antrag~keineUrlaubstage.
+      IMPORTING keys FOR ACTION ZSS_R_Antrag~keineUrlaubstage.
 
     METHODS validateDates FOR VALIDATE ON SAVE
-        IMPORTING keys FOR ZSS_R_Antrag~ValidateDates.
+      IMPORTING keys FOR ZSS_R_Antrag~ValidateDates.
 
     METHODS DetermineStatus FOR DETERMINE ON MODIFY
-        IMPORTING keys FOR ZSS_R_Antrag~determineStatus.
+      IMPORTING keys FOR ZSS_R_Antrag~determineStatus.
+
+    METHODS berechneUTage FOR MODIFY
+      IMPORTING keys FOR ACTION ZSS_R_Anspruch~berechneUTage.
+
+
 
 ENDCLASS.
 
@@ -62,8 +67,8 @@ CLASS lhc_Zss_R_Mitarbeiter IMPLEMENTATION.
       IF ls_antrag-Enddatum < ls_antrag-Startdatum.
         message = NEW Zss_cm_mitarbeiter( textid = Zss_cm_mitarbeiter=>datumsvalidierung ).
         APPEND VALUE #( %tky = ls_antrag-%tky
-                        %msg = message ) TO reported-ZSS_R_ANTRAG.
-        APPEND VALUE #( %tky = ls_antrag-%tky ) TO failed-ZSS_R_ANTRAG.
+                        %msg = message ) TO reported-zss_r_antrag.
+        APPEND VALUE #( %tky = ls_antrag-%tky ) TO failed-zss_r_antrag.
       ENDIF.
     ENDLOOP.
   ENDMETHOD.
@@ -75,14 +80,38 @@ CLASS lhc_Zss_R_Mitarbeiter IMPLEMENTATION.
          RESULT DATA(lt_antrag).
 
     LOOP AT lt_antrag REFERENCE INTO DATA(ls_antrag).
+      IF ls_antrag->Status = 'A'.
+        MODIFY ENTITY IN LOCAL MODE ZSS_R_Antrag
+            UPDATE FIELDS ( Beschreibung )
+        WITH VALUE #( FOR key IN keys
+        ( %tky       = key-%tky
+                       Beschreibung = 'Abgelehnt' ) ).
+    ELSEIF ls_antrag->Status = 'B'.
+        MODIFY ENTITY IN LOCAL MODE ZSS_R_Antrag
+            UPDATE FIELDS ( Beschreibung )
+        WITH VALUE #( FOR key IN keys
+        ( %tky       = key-%tky
+                       Beschreibung = 'Beantragt' ) ).
+    ELSEIF ls_antrag->Status = 'G'.
+        MODIFY ENTITY IN LOCAL MODE ZSS_R_Antrag
+            UPDATE FIELDS ( Beschreibung )
+        WITH VALUE #( FOR key IN keys
+        ( %tky       = key-%tky
+                       Beschreibung = 'Genehmigt' ) ).
+    ENDIF.
       IF ls_antrag->Status <> 'B'.
         MODIFY ENTITY IN LOCAL MODE ZSS_R_Antrag
-           UPDATE FIELDS ( Status )
-           WITH VALUE #( FOR key IN keys
-                         ( %tky   = key-%tky
-                           Status = 'B' ) ).
+           UPDATE FIELDS ( Status Beschreibung )
+       WITH VALUE #( FOR key IN keys
+                     ( %tky       = key-%tky
+                       Status     = 'B'
+                       Beschreibung = 'Beantragt' ) ).
       ENDIF.
     ENDLOOP.
+  ENDMETHOD.
+
+  METHOD berechneUTage.
+
   ENDMETHOD.
 
 ENDCLASS.

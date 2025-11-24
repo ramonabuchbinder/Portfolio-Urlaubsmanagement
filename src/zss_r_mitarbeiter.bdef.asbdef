@@ -40,12 +40,18 @@ authorization dependent by _Mitarbeiter
   field ( readonly ) MitarbeiterUUID;
   association _Mitarbeiter;
 
+  static action berechneUTage;
+
   field ( readonly, numbering : managed ) iduuid;
+  field (readonly ) Urlaubstage;
 
   mapping for zss_urlaubsanspr corresponding
     {
       jahr            = jahr;
       urlaubstage     = urlaubstage;
+      VerbrauchteUrlaubstage = verbrauchteutage;
+      VerfuegbareUrlaubstage = verfuegbareutage;
+      GeplanteUrlaubstage = geplanteutage;
       createdby       = created_by;
       createdat       = created_at;
       lastchangedby   = last_changed_by;
@@ -69,6 +75,7 @@ authorization dependent by _Mitarbeiter
 
   static action datumsvalidierung;
   static action keineUrlaubstage;
+  static action beschreibung;
 
   validation ValidateDates on save { create; }
 
@@ -87,6 +94,7 @@ authorization dependent by _Mitarbeiter
       urlaubstage       = urlaubstage;
       kommentar         = kommentar;
       status            = status;
+      Beschreibung = sbeschreibung;
       createdby         = created_by;
       createdat         = created_at;
       lastchangedby     = last_changed_by;

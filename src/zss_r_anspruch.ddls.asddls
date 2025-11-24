@@ -10,6 +10,9 @@ define view entity Zss_R_Anspruch
   mitarbeiter_uuid as MitarbeiterUuid,
   jahr             as Jahr,
   urlaubstage      as Urlaubstage,
+  verbrauchteutage as VerbrauchteUrlaubstage,
+  verfuegbareutage as VerfuegbareUrlaubstage,
+  geplanteutage as GeplanteUrlaubstage,
       
 
       /* Administrative Data */

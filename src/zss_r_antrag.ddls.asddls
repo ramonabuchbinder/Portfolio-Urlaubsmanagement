@@ -14,6 +14,7 @@ define view entity Zss_R_Antrag
   urlaubstage        as Urlaubstage,
   kommentar          as Kommentar,
   status  as Status,
+  sbeschreibung as Beschreibung,
       
 
       /* Administrative Data */
