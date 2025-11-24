@@ -10,8 +10,7 @@ define behavior for Zss_C_Mitarbeiter //alias <alias_name>
   use association _Anspruch { create; }
   use association _Antrag { create; }
 
-  use action datumsvalidierung;
-  use action keineUrlaubstage;
+
 }
 
 define behavior for Zss_C_Anspruch //alias <alias_name>
@@ -24,6 +23,7 @@ define behavior for Zss_C_Anspruch //alias <alias_name>
 
 define behavior for Zss_C_Antrag //alias <alias_name>
 {
+
   use update;
   use delete;
 

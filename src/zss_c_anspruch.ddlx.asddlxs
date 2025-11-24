@@ -18,15 +18,15 @@ annotate view Zss_C_Anspruch with
 
   /* Fields */
   @UI.lineItem: [{ position: 10 }]
-  @UI.fieldGroup: [{ position: 10, qualifier: 'Antragsdaten' }]
+  @UI.fieldGroup: [{ position: 10, qualifier: 'Anspruchsdaten' }]
   MitarbeiterUuid;
 
   @UI.lineItem: [{ position: 20 }]
-  @UI.fieldGroup: [{ position: 20, qualifier: 'Antragsdaten' }]
+  @UI.fieldGroup: [{ position: 20, qualifier: 'Anspruchsdaten' }]
   Jahr;
 
   @UI.lineItem: [{ position: 30 }]
-  @UI.fieldGroup: [{ position: 30, qualifier: 'Antragsdaten' }]
+  @UI.fieldGroup: [{ position: 30, qualifier: 'Anspruchsdaten' }]
   Urlaubstage;
 
 

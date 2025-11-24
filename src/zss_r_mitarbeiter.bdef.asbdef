@@ -14,11 +14,18 @@ authorization master ( instance )
   association _Anspruch { create; }
   association _Antrag { create; }
 
-  static action datumsvalidierung;
-  static action keineUrlaubstage;
-
-  validation ValidateDates on save {create;}
-
+  mapping for zss_mitarbeiter corresponding
+    {
+      IdUuid            = id_uuid;
+      mitarbeiternummer = mitarbeiternummer;
+      vorname           = vorname;
+      nachname          = nachname;
+      eintrittsdatum    = eintrittsdatum;
+      createdby         = created_by;
+      createdat         = created_at;
+      lastchangedby     = last_changed_by;
+      lastchangedat     = last_changed_at;
+    }
 
 }
 
@@ -33,7 +40,19 @@ authorization dependent by _Mitarbeiter
   field ( readonly ) MitarbeiterUUID;
   association _Mitarbeiter;
 
-  field (readonly, numbering : managed) iduuid;
+  field ( readonly, numbering : managed ) iduuid;
+
+  mapping for zss_urlaubsanspr corresponding
+    {
+      jahr            = jahr;
+      urlaubstage     = urlaubstage;
+      createdby       = created_by;
+      createdat       = created_at;
+      lastchangedby   = last_changed_by;
+      lastchangedat   = last_changed_at;
+      MitarbeiterUuid = mitarbeiter_uuid;
+      iduuid          = id_uuid;
+    }
 }
 
 define behavior for Zss_R_Antrag //alias <alias_name>
@@ -42,13 +61,35 @@ lock dependent by _Mitarbeiter
 authorization dependent by _Mitarbeiter
 //etag master <field_name>
 {
+
   update;
   delete;
   field ( readonly ) AntragstellerUUID;
   association _Mitarbeiter;
 
+  static action datumsvalidierung;
+  static action keineUrlaubstage;
 
-  field (readonly, numbering : managed) iduuid;
-  field (mandatory : create) GenehmigenderUuid, Startdatum, Enddatum, Urlaubstage, Kommentar;
+  validation ValidateDates on save { create; }
 
+  determination DetermineStatus on modify {create; update;}
+
+  field ( readonly, numbering : managed ) iduuid;
+  field ( mandatory : create ) GenehmigenderUuid, Startdatum, Enddatum;
+  field ( readonly ) CreatedAt, CreatedBy, LastChangedAt, LastChangedBy, Status;
+  mapping for zss_urlaubsantr corresponding
+    {
+      AntragstellerUuid = antragsteller_uuid;
+      iduuid            = id_uuid;
+      genehmigenderuuid = genehmigender_uuid;
+      startdatum        = startdatum;
+      enddatum          = enddatum;
+      urlaubstage       = urlaubstage;
+      kommentar         = kommentar;
+      status            = status;
+      createdby         = created_by;
+      createdat         = created_at;
+      lastchangedby     = last_changed_by;
+      lastchangedat     = last_changed_at;
+    }
 }

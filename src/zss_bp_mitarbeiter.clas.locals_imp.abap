@@ -8,13 +8,16 @@ CLASS lhc_Zss_R_Mitarbeiter DEFINITION INHERITING FROM cl_abap_behavior_handler.
       IMPORTING REQUEST requested_authorizations FOR Zss_R_Mitarbeiter RESULT result.
 
     METHODS datumsvalidierung FOR MODIFY
-        IMPORTING keys FOR ACTION ZSS_R_Mitarbeiter~datumsvalidierung.
+        IMPORTING keys FOR ACTION ZSS_R_Antrag~datumsvalidierung.
 
     METHODS keineUrlaubstage FOR MODIFY
-        IMPORTING keys FOR ACTION ZSS_R_Mitarbeiter~keineUrlaubstage.
+        IMPORTING keys FOR ACTION ZSS_R_Antrag~keineUrlaubstage.
 
     METHODS validateDates FOR VALIDATE ON SAVE
-        IMPORTING keys FOR ZSS_R_Mitarbeiter~ValidateDates.
+        IMPORTING keys FOR ZSS_R_Antrag~ValidateDates.
+
+    METHODS DetermineStatus FOR DETERMINE ON MODIFY
+        IMPORTING keys FOR ZSS_R_Antrag~determineStatus.
 
 ENDCLASS.
 
@@ -61,6 +64,23 @@ CLASS lhc_Zss_R_Mitarbeiter IMPLEMENTATION.
         APPEND VALUE #( %tky = ls_antrag-%tky
                         %msg = message ) TO reported-ZSS_R_ANTRAG.
         APPEND VALUE #( %tky = ls_antrag-%tky ) TO failed-ZSS_R_ANTRAG.
+      ENDIF.
+    ENDLOOP.
+  ENDMETHOD.
+
+  METHOD determineStatus.
+    READ ENTITY IN LOCAL MODE ZSS_R_Antrag
+         ALL FIELDS
+         WITH CORRESPONDING #( keys )
+         RESULT DATA(lt_antrag).
+
+    LOOP AT lt_antrag REFERENCE INTO DATA(ls_antrag).
+      IF ls_antrag->Status <> 'B'.
+        MODIFY ENTITY IN LOCAL MODE ZSS_R_Antrag
+           UPDATE FIELDS ( Status )
+           WITH VALUE #( FOR key IN keys
+                         ( %tky   = key-%tky
+                           Status = 'B' ) ).
       ENDIF.
     ENDLOOP.
   ENDMETHOD.
