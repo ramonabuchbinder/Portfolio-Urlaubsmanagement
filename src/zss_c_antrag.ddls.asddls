@@ -5,7 +5,7 @@ define view entity Zss_C_Antrag as projection on Zss_R_Antrag
 {
     key IDUUID,
  AntragstellerUuid,
-@Consumption.valueHelpDefinition: [{ entity: { name: 'Zss_I_Genehmigender', element: 'GenehmigenderUuid' } }]
+@Consumption.valueHelpDefinition: [{ entity: { name: 'Zss_I_Genehmigender', element: 'IDUUID' } }]
  GenehmigenderUuid,
   Startdatum,
   Enddatum,

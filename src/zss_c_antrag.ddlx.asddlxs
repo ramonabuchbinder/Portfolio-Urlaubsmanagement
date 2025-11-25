@@ -3,8 +3,8 @@
 {
   typeName: 'Antrag',
   typeNamePlural: 'Anträge',
-  title.value: 'AntragstellerUuid',
-  description.value: 'AntragstellerUuid'
+  title.value: 'Kommentar',
+  description.value: 'Beschreibung'
 }
 annotate view Zss_C_Antrag with
 {
@@ -18,35 +18,43 @@ annotate view Zss_C_Antrag with
   /* Fields */
   @UI.lineItem: [{ position: 10 }]
   @UI.fieldGroup: [{ position: 10, qualifier: 'Antragsdaten' }]
+  @EndUserText.label: 'AntragstellerUuid'
   AntragstellerUuid;
 
   @UI.lineItem: [{ position: 20 }]
   @UI.selectionField: [{ position: 20 }]
   @UI.fieldGroup: [{ position: 20, qualifier: 'Antragsdaten' }]
+  @EndUserText.label: 'GenehmigenderUuid'
   GenehmigenderUuid;
 
   @UI.lineItem: [{ position: 30 }]
   @UI.fieldGroup: [{ position: 30, qualifier: 'Antragsdaten' }]
+  @EndUserText.label: 'Startdatum'
   Startdatum;
   
   @UI.lineItem: [{ position: 40 }]
   @UI.fieldGroup: [{ position: 40, qualifier: 'Antragsdaten' }]
+  @EndUserText.label: 'Enddatum'
   Enddatum;
   
   @UI.lineItem: [{ position: 50 }]
   @UI.fieldGroup: [{ position: 50, qualifier: 'Antragsdaten' }]
+  @EndUserText.label: 'Urlaubstage'
   Urlaubstage;
   
   @UI.lineItem: [{ position: 60 }]
   @UI.fieldGroup: [{ position: 60, qualifier: 'Antragsdaten' }]
+  @EndUserText.label: 'Kommentar'
   Kommentar;
   
   @UI.lineItem: [{ position: 70 }]
   @UI.fieldGroup: [{ position: 70, qualifier: 'Antragsdaten' }]
+  @EndUserText.label: 'Status'
   Status;
   
   @UI.lineItem: [{ position: 80 }]
   @UI.fieldGroup: [{ position: 80, qualifier: 'Antragsdaten' }]
+  @EndUserText.label: 'Status Beschreibung'
   Beschreibung;
 
 }

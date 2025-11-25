@@ -19,8 +19,8 @@ CLASS lhc_Zss_R_Mitarbeiter DEFINITION INHERITING FROM cl_abap_behavior_handler.
     METHODS DetermineStatus FOR DETERMINE ON MODIFY
       IMPORTING keys FOR ZSS_R_Antrag~determineStatus.
 
-    METHODS berechneUTage FOR MODIFY
-      IMPORTING keys FOR ACTION ZSS_R_Anspruch~berechneUTage.
+    METHODS berechneUTage FOR DETERMINE ON MODIFY
+    IMPORTING keys FOR ZSS_R_Antrag~berechneUTage.
 
 
 
@@ -112,6 +112,44 @@ CLASS lhc_Zss_R_Mitarbeiter IMPLEMENTATION.
 
   METHOD berechneUTage.
 
-  ENDMETHOD.
+  " Betroffene Anträge einlesen
+  READ ENTITY IN LOCAL MODE ZSS_R_Antrag
+       FIELDS ( Startdatum Enddatum Urlaubstage )
+       WITH CORRESPONDING #( keys )
+       RESULT DATA(lt_antrag).
+
+  LOOP AT lt_antrag INTO DATA(ls_antrag).
+
+    " BW-Kalender erstellen
+    TRY.
+        DATA(calendar) = cl_fhc_calendar_runtime=>create_factorycalendar_runtime( 'SAP_DE_BW' ).
+      CATCH cx_fhc_runtime.
+        CONTINUE.
+    ENDTRY.
+
+    " Werktage zählen
+    TRY.
+        DATA(working_days) = ( calendar->calc_workingdays_between_dates(
+                                 iv_start = ls_antrag-startdatum
+                                 iv_end   = ls_antrag-enddatum ) ) + 1.
+      CATCH cx_fhc_runtime.
+        CONTINUE.
+    ENDTRY.
+
+    " Nur schreiben, wenn Wert sich wirklich ändert
+    IF ls_antrag-Urlaubstage <> working_days.
+      " Vermeidung von Endlosschleifen: nur Update, wenn Wert unterschiedlich
+      MODIFY ENTITY IN LOCAL MODE ZSS_R_Antrag
+        UPDATE FIELDS ( Urlaubstage )
+        WITH VALUE #(
+          ( %tky        = ls_antrag-%tky
+            Urlaubstage = working_days )
+        ).
+    ENDIF.
+
+  ENDLOOP.
+
+ENDMETHOD.
+
 
 ENDCLASS.

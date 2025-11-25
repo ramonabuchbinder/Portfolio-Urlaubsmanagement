@@ -14,6 +14,7 @@ define root view entity Zss_R_Mitarbeiter
   nachname         as Nachname,
   eintrittsdatum    as Eintrittsdatum,
   
+  
       
 
       /* Administrative Data */

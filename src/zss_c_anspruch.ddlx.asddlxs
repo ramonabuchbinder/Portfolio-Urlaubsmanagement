@@ -3,8 +3,7 @@
 {
   typeName: 'Anspruch',
   typeNamePlural: 'Ansprüche',
-  title.value: 'MitarbeiterUuid',
-  description.value: 'MitarbeiterUuid'
+  title.value: 'Jahr'
 }
 annotate view Zss_C_Anspruch with
 {
@@ -19,26 +18,32 @@ annotate view Zss_C_Anspruch with
   /* Fields */
   @UI.lineItem: [{ position: 10 }]
   @UI.fieldGroup: [{ position: 10, qualifier: 'Anspruchsdaten' }]
+  @EndUserText.label: 'MitarbeiterUuid'
   MitarbeiterUuid;
 
   @UI.lineItem: [{ position: 20 }]
   @UI.fieldGroup: [{ position: 20, qualifier: 'Anspruchsdaten' }]
+  @EndUserText.label: 'Jahr'
   Jahr;
 
   @UI.lineItem: [{ position: 30 }]
   @UI.fieldGroup: [{ position: 30, qualifier: 'Anspruchsdaten' }]
+  @EndUserText.label: 'Urlaubstage'
   Urlaubstage;
   
   @UI.lineItem: [{ position: 40 }]
   @UI.fieldGroup: [{ position: 40, qualifier: 'Anspruchsdaten' }]
+  @EndUserText.label: 'Verfügbare Urlaubstage'
   VerfuegbareUrlaubstage;
 
   @UI.lineItem: [{ position: 50 }]
   @UI.fieldGroup: [{ position: 50, qualifier: 'Anspruchsdaten' }]
+  @EndUserText.label: 'Verbrauchte Urlaubstage'
   VerbrauchteUrlaubstage;
 
   @UI.lineItem: [{ position: 60 }]
   @UI.fieldGroup: [{ position: 60, qualifier: 'Anspruchsdaten' }]
+  @EndUserText.label: 'Geplante Urlaubstage'
   GeplanteUrlaubstage;
 
 

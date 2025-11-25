@@ -3,8 +3,8 @@
 {
   typeNamePlural: 'Mitarbeiter',
   typeName: 'Mitarbeiter',
-  title.value: 'Mitarbeiternummer',
-  description.value: 'Mitarbeiternummer'
+  title.value: 'Nachname',
+  description.value: 'Vorname'
 }
 
 annotate view Zss_C_Mitarbeiter with
@@ -29,21 +29,25 @@ annotate view Zss_C_Mitarbeiter with
 
   @UI.lineItem: [{ position: 10 }]
   @UI.fieldGroup: [{ position: 10, qualifier: 'Mitarbeiterdaten' }]
+  @EndUserText.label: 'Mitarbeiternummer'
   Mitarbeiternummer;
 
   @UI.lineItem: [{ position: 20 }]
   @UI.selectionField: [{ position: 10 }]
   @UI.fieldGroup: [{ position: 20, qualifier: 'Mitarbeiterdaten' }]
+  @EndUserText.label: 'Vorname'
   Vorname;
 
   @UI.lineItem: [{ position: 30 }]
   @UI.selectionField: [{ position: 20 }]
   @UI.fieldGroup: [{ position: 30, qualifier: 'Mitarbeiterdaten' }]
+  @EndUserText.label: 'Nachname'
   Nachname;
 
   @UI.lineItem: [{ position: 40 }]
   @UI.selectionField: [{ position: 30 }]
   @UI.fieldGroup: [{ position: 40, qualifier: 'Mitarbeiterdaten' }]
+  @EndUserText.label: 'Eintrittsdatum'
   Eintrittsdatum;
 
 
@@ -58,5 +62,7 @@ annotate view Zss_C_Mitarbeiter with
 
   @UI.fieldGroup: [{ position: 50, qualifier: 'AdminData' }]
   LastChangedAt;
+  
+  
 
 }
