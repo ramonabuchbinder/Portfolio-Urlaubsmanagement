@@ -1,14 +1,13 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Travel'
-define view entity Zss_R_Antrag
+define view entity ZSS_R_ANTRAGMANAGER
   as select from zss_urlaubsantr
-  association to parent Zss_R_Mitarbeiter as _Mitarbeiter on $projection.AntragstellerUuid = _Mitarbeiter.IDUUID
-  composition [0..*] of ZSS_R_ANTRAGMANAGER as _Manager
+association to parent Zss_R_Antrag as _Antrag on $projection.IDUUID = _Antrag.IDUUID
+  
 {
 
   key id_uuid       as IDUUID,
   antragsteller_uuid as AntragstellerUuid,
-  genehmigender_uuid as GenehmigenderUuid,
   startdatum         as Startdatum,
   enddatum           as Enddatum,
   urlaubstage        as Urlaubstage,
@@ -27,6 +26,5 @@ define view entity Zss_R_Antrag
       @Semantics.systemDateTime.lastChangedAt: true
       last_changed_at    as LastChangedAt,
       
-    _Mitarbeiter,
-    _Manager
+      _Antrag
 }

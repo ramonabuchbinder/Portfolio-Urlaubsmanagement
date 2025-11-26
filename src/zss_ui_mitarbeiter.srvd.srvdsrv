@@ -1,6 +1,7 @@
 @EndUserText.label: 'Service Definition Mitarbeiter'
 define service ZSS_UI_Mitarbeiter {
-  expose Zss_C_Mitarbeiter as Mitarbeiter;
-  expose Zss_C_Antrag      as Antrag;
-  expose Zss_C_Anspruch    as Anspruch;
+  expose Zss_C_Mitarbeiter   as Mitarbeiter;
+  expose Zss_C_Antrag        as Antrag;
+  expose Zss_C_Anspruch      as Anspruch;
+  expose ZSS_C_AntragManager as ManagerAntrag;
 }

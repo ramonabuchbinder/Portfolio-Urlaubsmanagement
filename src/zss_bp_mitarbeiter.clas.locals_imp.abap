@@ -16,11 +16,12 @@ CLASS lhc_Zss_R_Mitarbeiter DEFINITION INHERITING FROM cl_abap_behavior_handler.
     METHODS validateDates FOR VALIDATE ON SAVE
       IMPORTING keys FOR ZSS_R_Antrag~ValidateDates.
 
-    METHODS DetermineStatus FOR DETERMINE ON MODIFY
+ METHODS DetermineStatus FOR DETERMINE ON MODIFY
       IMPORTING keys FOR ZSS_R_Antrag~determineStatus.
-
     METHODS berechneUTage FOR DETERMINE ON MODIFY
     IMPORTING keys FOR ZSS_R_Antrag~berechneUTage.
+
+
 
 
 
@@ -72,8 +73,7 @@ CLASS lhc_Zss_R_Mitarbeiter IMPLEMENTATION.
       ENDIF.
     ENDLOOP.
   ENDMETHOD.
-
-  METHOD determineStatus.
+METHOD determineStatus.
     READ ENTITY IN LOCAL MODE ZSS_R_Antrag
          ALL FIELDS
          WITH CORRESPONDING #( keys )
@@ -110,34 +110,26 @@ CLASS lhc_Zss_R_Mitarbeiter IMPLEMENTATION.
     ENDLOOP.
   ENDMETHOD.
 
+
+
   METHOD berechneUTage.
 
   " Betroffene Anträge einlesen
   READ ENTITY IN LOCAL MODE ZSS_R_Antrag
-       FIELDS ( Startdatum Enddatum Urlaubstage )
+       FIELDS ( Startdatum Enddatum )
        WITH CORRESPONDING #( keys )
        RESULT DATA(lt_antrag).
 
   LOOP AT lt_antrag INTO DATA(ls_antrag).
 
-    " BW-Kalender erstellen
-    TRY.
-        DATA(calendar) = cl_fhc_calendar_runtime=>create_factorycalendar_runtime( 'SAP_DE_BW' ).
-      CATCH cx_fhc_runtime.
-        CONTINUE.
-    ENDTRY.
+   DATA(startdatum) = ls_antrag-Startdatum.
+      startdatum = startdatum - 1.
+      TRY.
+          DATA(calendar) = cl_fhc_calendar_runtime=>create_factorycalendar_runtime( 'SAP_DE_BW' ).
+          DATA(working_days) = calendar->calc_workingdays_between_dates( iv_start = startdatum iv_end = ls_antrag-Enddatum ).
+        CATCH cx_fhc_runtime.
+      ENDTRY.
 
-    " Werktage zählen
-    TRY.
-        DATA(working_days) = ( calendar->calc_workingdays_between_dates(
-                                 iv_start = ls_antrag-startdatum
-                                 iv_end   = ls_antrag-enddatum ) ) + 1.
-      CATCH cx_fhc_runtime.
-        CONTINUE.
-    ENDTRY.
-
-    " Nur schreiben, wenn Wert sich wirklich ändert
-    IF ls_antrag-Urlaubstage <> working_days.
       " Vermeidung von Endlosschleifen: nur Update, wenn Wert unterschiedlich
       MODIFY ENTITY IN LOCAL MODE ZSS_R_Antrag
         UPDATE FIELDS ( Urlaubstage )
@@ -145,7 +137,7 @@ CLASS lhc_Zss_R_Mitarbeiter IMPLEMENTATION.
           ( %tky        = ls_antrag-%tky
             Urlaubstage = working_days )
         ).
-    ENDIF.
+
 
   ENDLOOP.
 

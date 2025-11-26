@@ -84,6 +84,7 @@ authorization dependent by _Mitarbeiter
 
 
 
+
   field ( readonly, numbering : managed ) iduuid;
   field ( mandatory : create ) GenehmigenderUuid, Startdatum, Enddatum;
   field ( readonly ) CreatedAt, CreatedBy, LastChangedAt, LastChangedBy, Status, Beschreibung, Urlaubstage;
