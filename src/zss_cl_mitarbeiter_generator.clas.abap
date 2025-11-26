@@ -167,6 +167,7 @@ CLASS ZSS_CL_MITARBEITER_GENERATOR IMPLEMENTATION.
     ls_urlaubsantrag-urlaubstage        = 8.
     ls_urlaubsantrag-kommentar          = 'Sommerurlaub'.
     ls_urlaubsantrag-status = 'G'.
+    ls_urlaubsantrag-sbeschreibung = 'Genehmigt'.
     ls_urlaubsantrag-created_by     = 'GENERATOR'.
     GET TIME STAMP FIELD ls_urlaubsantrag-created_at.
     ls_urlaubsantrag-last_changed_by = 'GENERATOR'.
@@ -186,6 +187,7 @@ CLASS ZSS_CL_MITARBEITER_GENERATOR IMPLEMENTATION.
     ls_urlaubsantrag-urlaubstage        = 4.
     ls_urlaubsantrag-kommentar          = 'Weihnachtsurlaub'.
     ls_urlaubsantrag-status = 'A'.
+    ls_urlaubsantrag-sbeschreibung = 'Abgelehnt'.
     ls_urlaubsantrag-created_by     = 'GENERATOR'.
     GET TIME STAMP FIELD ls_urlaubsantrag-created_at.
     ls_urlaubsantrag-last_changed_by = 'GENERATOR'.
@@ -205,6 +207,7 @@ CLASS ZSS_CL_MITARBEITER_GENERATOR IMPLEMENTATION.
     ls_urlaubsantrag-urlaubstage        = 3.
     ls_urlaubsantrag-kommentar          = 'Weihnachtsurlaub (2. Versuch)'.
     ls_urlaubsantrag-status = 'G'.
+    ls_urlaubsantrag-sbeschreibung = 'Genehmigt'.
     ls_urlaubsantrag-created_by     = 'GENERATOR'.
     GET TIME STAMP FIELD ls_urlaubsantrag-created_at.
     ls_urlaubsantrag-last_changed_by = 'GENERATOR'.
@@ -224,6 +227,7 @@ CLASS ZSS_CL_MITARBEITER_GENERATOR IMPLEMENTATION.
     ls_urlaubsantrag-urlaubstage        = 14.
     ls_urlaubsantrag-kommentar          = ''.
     ls_urlaubsantrag-status = 'G'.
+    ls_urlaubsantrag-sbeschreibung = 'Genehmigt'.
     ls_urlaubsantrag-created_by     = 'GENERATOR'.
     GET TIME STAMP FIELD ls_urlaubsantrag-created_at.
     ls_urlaubsantrag-last_changed_by = 'GENERATOR'.
@@ -243,6 +247,7 @@ CLASS ZSS_CL_MITARBEITER_GENERATOR IMPLEMENTATION.
     ls_urlaubsantrag-urlaubstage        = 8.
     ls_urlaubsantrag-kommentar          = 'Winterurlaub'.
     ls_urlaubsantrag-status = 'B'.
+    ls_urlaubsantrag-sbeschreibung = 'Beantragt'.
     ls_urlaubsantrag-created_by     = 'GENERATOR'.
     GET TIME STAMP FIELD ls_urlaubsantrag-created_at.
     ls_urlaubsantrag-last_changed_by = 'GENERATOR'.
@@ -262,6 +267,7 @@ CLASS ZSS_CL_MITARBEITER_GENERATOR IMPLEMENTATION.
     ls_urlaubsantrag-urlaubstage        = 3.
     ls_urlaubsantrag-kommentar          = 'Weihnachtsurlaub'.
     ls_urlaubsantrag-status = 'B'.
+    ls_urlaubsantrag-sbeschreibung = 'Beantragt'.
     ls_urlaubsantrag-created_by     = 'GENERATOR'.
     GET TIME STAMP FIELD ls_urlaubsantrag-created_at.
     ls_urlaubsantrag-last_changed_by = 'GENERATOR'.

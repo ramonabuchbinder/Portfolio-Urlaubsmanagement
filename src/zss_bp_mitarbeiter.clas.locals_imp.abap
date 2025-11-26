@@ -16,14 +16,11 @@ CLASS lhc_Zss_R_Mitarbeiter DEFINITION INHERITING FROM cl_abap_behavior_handler.
     METHODS validateDates FOR VALIDATE ON SAVE
       IMPORTING keys FOR ZSS_R_Antrag~ValidateDates.
 
- METHODS DetermineStatus FOR DETERMINE ON MODIFY
+    METHODS DetermineStatus FOR DETERMINE ON MODIFY
       IMPORTING keys FOR ZSS_R_Antrag~determineStatus.
+
     METHODS berechneUTage FOR DETERMINE ON MODIFY
-    IMPORTING keys FOR ZSS_R_Antrag~berechneUTage.
-
-
-
-
+      IMPORTING keys FOR ZSS_R_Antrag~berechneUTage.
 
 ENDCLASS.
 
@@ -56,15 +53,13 @@ CLASS lhc_Zss_R_Mitarbeiter IMPLEMENTATION.
   METHOD validatedates.
     DATA message TYPE REF TO ZSS_cm_Mitarbeiter.
 
-    " Read Travels
+    " Anträge lesen
     READ ENTITY IN LOCAL MODE ZSS_R_Antrag
          FIELDS ( Startdatum Enddatum )
          WITH CORRESPONDING #( keys )
          RESULT DATA(lt_Antrag).
 
-    " Process Travels
     LOOP AT lt_antrag INTO DATA(ls_antrag).
-      " Validate Dates and Create Error Message
       IF ls_antrag-Enddatum < ls_antrag-Startdatum.
         message = NEW Zss_cm_mitarbeiter( textid = Zss_cm_mitarbeiter=>datumsvalidierung ).
         APPEND VALUE #( %tky = ls_antrag-%tky
@@ -73,56 +68,49 @@ CLASS lhc_Zss_R_Mitarbeiter IMPLEMENTATION.
       ENDIF.
     ENDLOOP.
   ENDMETHOD.
-METHOD determineStatus.
-    READ ENTITY IN LOCAL MODE ZSS_R_Antrag
-         ALL FIELDS
-         WITH CORRESPONDING #( keys )
-         RESULT DATA(lt_antrag).
 
-    LOOP AT lt_antrag REFERENCE INTO DATA(ls_antrag).
-      IF ls_antrag->Status = 'A'.
-        MODIFY ENTITY IN LOCAL MODE ZSS_R_Antrag
-            UPDATE FIELDS ( Beschreibung )
-        WITH VALUE #( FOR key IN keys
-        ( %tky       = key-%tky
-                       Beschreibung = 'Abgelehnt' ) ).
-    ELSEIF ls_antrag->Status = 'B'.
-        MODIFY ENTITY IN LOCAL MODE ZSS_R_Antrag
-            UPDATE FIELDS ( Beschreibung )
-        WITH VALUE #( FOR key IN keys
-        ( %tky       = key-%tky
-                       Beschreibung = 'Beantragt' ) ).
-    ELSEIF ls_antrag->Status = 'G'.
-        MODIFY ENTITY IN LOCAL MODE ZSS_R_Antrag
-            UPDATE FIELDS ( Beschreibung )
-        WITH VALUE #( FOR key IN keys
-        ( %tky       = key-%tky
-                       Beschreibung = 'Genehmigt' ) ).
-    ENDIF.
-      IF ls_antrag->Status <> 'B'.
-        MODIFY ENTITY IN LOCAL MODE ZSS_R_Antrag
-           UPDATE FIELDS ( Status Beschreibung )
-       WITH VALUE #( FOR key IN keys
-                     ( %tky       = key-%tky
-                       Status     = 'B'
-                       Beschreibung = 'Beantragt' ) ).
-      ENDIF.
-    ENDLOOP.
-  ENDMETHOD.
+  METHOD determineStatus.
 
-
-
-  METHOD berechneUTage.
-
-  " Betroffene Anträge einlesen
   READ ENTITY IN LOCAL MODE ZSS_R_Antrag
-       FIELDS ( Startdatum Enddatum )
+       FIELDS ( Status Beschreibung )
        WITH CORRESPONDING #( keys )
        RESULT DATA(lt_antrag).
 
   LOOP AT lt_antrag INTO DATA(ls_antrag).
 
-   DATA(startdatum) = ls_antrag-Startdatum.
+    " Neue Werte
+    DATA(new_status)       = 'B'.
+    DATA(new_beschreibung) = 'Beantragt'.
+
+    " Nur updaten, wenn sich etwas ändert → verhindert Endlosschleife!
+    IF ls_antrag-Status <> new_status
+    OR ls_antrag-Beschreibung <> new_beschreibung.
+
+      MODIFY ENTITY IN LOCAL MODE ZSS_R_Antrag
+        UPDATE FIELDS ( Status Beschreibung )
+        WITH VALUE #(
+          ( %tky        = ls_antrag-%tky
+            Status      = new_status
+            Beschreibung = new_beschreibung )
+        ).
+
+    ENDIF.
+
+  ENDLOOP.
+
+ENDMETHOD.
+
+  METHOD berechneUTage.
+
+  " Anträge lesen inkl. Urlaubstage (wichtig!)
+  READ ENTITY IN LOCAL MODE ZSS_R_Antrag
+       FIELDS ( Startdatum Enddatum Urlaubstage )
+       WITH CORRESPONDING #( keys )
+       RESULT DATA(lt_antrag).
+
+  LOOP AT lt_antrag INTO DATA(ls_antrag).
+
+    DATA(startdatum) = ls_antrag-Startdatum.
       startdatum = startdatum - 1.
       TRY.
           DATA(calendar) = cl_fhc_calendar_runtime=>create_factorycalendar_runtime( 'SAP_DE_BW' ).
@@ -130,7 +118,11 @@ METHOD determineStatus.
         CATCH cx_fhc_runtime.
       ENDTRY.
 
-      " Vermeidung von Endlosschleifen: nur Update, wenn Wert unterschiedlich
+
+
+    " ❗ WICHTIG: Nur ändern, wenn der Wert WIRKLICH anders ist
+    IF working_days <> ls_antrag-Urlaubstage.
+
       MODIFY ENTITY IN LOCAL MODE ZSS_R_Antrag
         UPDATE FIELDS ( Urlaubstage )
         WITH VALUE #(
@@ -138,10 +130,10 @@ METHOD determineStatus.
             Urlaubstage = working_days )
         ).
 
+    ENDIF.
 
   ENDLOOP.
 
 ENDMETHOD.
-
 
 ENDCLASS.

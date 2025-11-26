@@ -72,6 +72,7 @@ authorization dependent by _Mitarbeiter
   delete;
   field ( readonly ) AntragstellerUUID;
   association _Mitarbeiter;
+  //association _Manager { create; }
 
   static action datumsvalidierung;
   static action keineUrlaubstage;
@@ -104,4 +105,4 @@ authorization dependent by _Mitarbeiter
       lastchangedby     = last_changed_by;
       lastchangedat     = last_changed_at;
     }
-}
+    }
