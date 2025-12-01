@@ -16,7 +16,8 @@ annotate view Zss_C_Mitarbeiter with
     { position: 10, targetQualifier: 'Mitarbeiterdaten', label: 'Mitarbeiterdaten', type: #FIELDGROUP_REFERENCE },
     { position: 20, targetQualifier: 'AdminData', label: 'Administrative Data', type: #FIELDGROUP_REFERENCE },
     { position: 30, targetElement: '_Anspruch', label: 'Ansprüche', type: #LINEITEM_REFERENCE },
-    { position: 40, targetElement: '_Antrag', label: 'Anträge', type: #LINEITEM_REFERENCE }
+    { position: 40, targetElement: '_Antrag', label: 'Anträge', type: #LINEITEM_REFERENCE },
+    { position: 50, targetQualifier: 'Urlaubstage', label: 'Urlaubstage', type: #FIELDGROUP_REFERENCE}
   ]
   
   /* Actions */
@@ -50,6 +51,14 @@ annotate view Zss_C_Mitarbeiter with
   @EndUserText.label: 'Eintrittsdatum'
   Eintrittsdatum;
 
+  @UI.fieldGroup: [{ position: 10, qualifier: 'Urlaubstage', label: 'Geplante Urlaubstage' }]
+  geplanteUrlaubstage;
+    
+  @UI.fieldGroup: [{ position: 20, qualifier: 'Urlaubstage', label: 'Verbrauchte Urlaubstage' }]
+  verbrauchteUrlaubstage;
+    
+  @UI.fieldGroup: [{ position: 30, qualifier: 'Urlaubstage', label: 'Verfügbare Urlaubstage' }]
+  verfuegbareUrlaubstage;
 
   @UI.fieldGroup: [{ position: 20, qualifier: 'AdminData' }]
   CreatedBy;

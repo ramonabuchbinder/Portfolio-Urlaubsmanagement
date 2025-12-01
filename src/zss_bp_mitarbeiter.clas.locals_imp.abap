@@ -7,20 +7,18 @@ CLASS lhc_Zss_R_Mitarbeiter DEFINITION INHERITING FROM cl_abap_behavior_handler.
     METHODS get_global_authorizations FOR GLOBAL AUTHORIZATION
       IMPORTING REQUEST requested_authorizations FOR Zss_R_Mitarbeiter RESULT result.
 
-    METHODS datumsvalidierung FOR MODIFY
-      IMPORTING keys FOR ACTION ZSS_R_Antrag~datumsvalidierung.
-
     METHODS keineUrlaubstage FOR MODIFY
       IMPORTING keys FOR ACTION ZSS_R_Antrag~keineUrlaubstage.
 
-    METHODS validateDates FOR VALIDATE ON SAVE
-      IMPORTING keys FOR ZSS_R_Antrag~ValidateDates.
+    METHODS datumsvalidierung FOR VALIDATE ON SAVE
+      IMPORTING keys FOR ZSS_R_Antrag~datumsvalidierung.
 
     METHODS DetermineStatus FOR DETERMINE ON MODIFY
       IMPORTING keys FOR ZSS_R_Antrag~determineStatus.
 
     METHODS berechneUTage FOR DETERMINE ON MODIFY
       IMPORTING keys FOR ZSS_R_Antrag~berechneUTage.
+
 
 ENDCLASS.
 
@@ -34,24 +32,7 @@ CLASS lhc_Zss_R_Mitarbeiter IMPLEMENTATION.
 
   METHOD datumsvalidierung.
     DATA message TYPE REF TO ZSS_cm_Mitarbeiter.
-
-    message = NEW ZSS_cm_mitarbeiter( severity  = if_abap_behv_message=>severity-success
-                              textid    = Zss_cm_Mitarbeiter=>datumsvalidierung ).
-
-    APPEND message TO reported-%other.
-  ENDMETHOD.
-
-  METHOD keineUrlaubstage.
-    DATA message TYPE REF TO ZSS_cm_Mitarbeiter.
-
-    message = NEW ZSS_cm_mitarbeiter( severity  = if_abap_behv_message=>severity-success
-                              textid    = Zss_cm_Mitarbeiter=>keineUrlaubstage ).
-
-    APPEND message TO reported-%other.
-  ENDMETHOD.
-
-  METHOD validatedates.
-    DATA message TYPE REF TO ZSS_cm_Mitarbeiter.
+    DATA(lo_context_info) = NEW cl_abap_context_info( ).
 
     " Anträge lesen
     READ ENTITY IN LOCAL MODE ZSS_R_Antrag
@@ -61,7 +42,9 @@ CLASS lhc_Zss_R_Mitarbeiter IMPLEMENTATION.
 
     LOOP AT lt_antrag INTO DATA(ls_antrag).
       IF ls_antrag-Enddatum < ls_antrag-Startdatum.
-        message = NEW Zss_cm_mitarbeiter( textid = Zss_cm_mitarbeiter=>datumsvalidierung ).
+        message = NEW Zss_cm_mitarbeiter( textid = Zss_cm_mitarbeiter=>datumsvalidierung
+        severity = if_abap_behv_message=>severity-error ).
+
         APPEND VALUE #( %tky = ls_antrag-%tky
                         %msg = message ) TO reported-zss_r_antrag.
         APPEND VALUE #( %tky = ls_antrag-%tky ) TO failed-zss_r_antrag.
@@ -135,5 +118,10 @@ ENDMETHOD.
   ENDLOOP.
 
 ENDMETHOD.
+
+METHOD keineurlaubstage.
+
+ENDMETHOD.
+
 
 ENDCLASS.

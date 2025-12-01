@@ -29,14 +29,51 @@ CLASS zss_cm_mitarbeiter DEFINITION
         attr4 TYPE scx_attrname VALUE '',
       END OF keineUrlaubstage.
 
+       CONSTANTS:
+      BEGIN OF erfolgreichAbgelehnt,
+        msgid TYPE symsgid      VALUE 'ZSS_Mitarbeiter',
+        msgno TYPE symsgno      VALUE '003',
+        attr1 TYPE scx_attrname VALUE 'IdUuid',
+        attr2 TYPE scx_attrname VALUE '',
+        attr3 TYPE scx_attrname VALUE '',
+        attr4 TYPE scx_attrname VALUE '',
+      END OF erfolgreichAbgelehnt.
+
+       CONSTANTS:
+      BEGIN OF erfolgreichAngenommen,
+        msgid TYPE symsgid      VALUE 'ZSS_Mitarbeiter',
+        msgno TYPE symsgno      VALUE '004',
+        attr1 TYPE scx_attrname VALUE 'IdUuid',
+        attr2 TYPE scx_attrname VALUE '',
+        attr3 TYPE scx_attrname VALUE '',
+        attr4 TYPE scx_attrname VALUE '',
+      END OF erfolgreichAngenommen.
+
+       CONSTANTS:
+      BEGIN OF bereitsBearbeitet,
+        msgid TYPE symsgid      VALUE 'ZSS_Mitarbeiter',
+        msgno TYPE symsgno      VALUE '004',
+        attr1 TYPE scx_attrname VALUE 'IdUuid',
+        attr2 TYPE scx_attrname VALUE '',
+        attr3 TYPE scx_attrname VALUE '',
+        attr4 TYPE scx_attrname VALUE '',
+      END OF bereitsBearbeitet.
+
+
     " Attributs
     DATA urlaubstage type i.
+    data comment type string.
+    data IdUuid type zss_urlaubsantr.
+
+
     " Constructor
     METHODS constructor
       IMPORTING
         severity  TYPE if_abap_behv_message=>t_severity DEFAULT if_abap_behv_message=>severity-error
         textid    LIKE if_t100_message=>t100key         DEFAULT if_t100_message=>default_textid
-        !previous LIKE previous OPTIONAL.
+        !previous LIKE previous OPTIONAL
+        IdUuid type zss_urlaubsantr optional.
+
 
 
   PROTECTED SECTION.
@@ -49,6 +86,7 @@ CLASS Zss_cm_mitarbeiter IMPLEMENTATION.
 
     if_t100_message~t100key = textid.
     if_abap_behv_message~m_severity = severity.
+    me->IdUuid = IdUuid.
   ENDMETHOD.
 ENDCLASS.
 

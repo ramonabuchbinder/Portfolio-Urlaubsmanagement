@@ -3,7 +3,8 @@
 @Metadata.ignorePropagatedAnnotations: true
 @Search.searchable: true
 @Metadata.allowExtensions: true
-define view entity ZSS_C_AntragManager as projection on ZSS_R_ANTRAGMANAGER
+define view entity ZSS_C_AntragManager 
+as projection on Zss_R_Antrag
 {
     key IDUUID,
     AntragstellerUuid,
@@ -22,6 +23,8 @@ define view entity ZSS_C_AntragManager as projection on ZSS_R_ANTRAGMANAGER
       LastChangedBy,
       LastChangedAt,
       
-      _Antrag : redirected to parent Zss_C_Antrag
+      
+      /*Assosiations*/
+      _Mitarbeiter : redirected to parent ZSS_C_Mitarbeiter_M
       
 }

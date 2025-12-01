@@ -3,7 +3,7 @@
 define view entity Zss_R_Antrag
   as select from zss_urlaubsantr
   association to parent Zss_R_Mitarbeiter as _Mitarbeiter on $projection.AntragstellerUuid = _Mitarbeiter.IDUUID
-  composition [0..*] of ZSS_R_ANTRAGMANAGER as _Manager
+  
 {
 
   key id_uuid       as IDUUID,
@@ -27,6 +27,5 @@ define view entity Zss_R_Antrag
       @Semantics.systemDateTime.lastChangedAt: true
       last_changed_at    as LastChangedAt,
       
-    _Mitarbeiter,
-    _Manager
+    _Mitarbeiter
 }

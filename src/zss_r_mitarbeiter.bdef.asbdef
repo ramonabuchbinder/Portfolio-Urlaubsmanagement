@@ -25,6 +25,7 @@ authorization master ( instance )
       createdat         = created_at;
       lastchangedby     = last_changed_by;
       lastchangedat     = last_changed_at;
+
     }
 
 }
@@ -40,7 +41,8 @@ authorization dependent by _Mitarbeiter
   field ( readonly ) MitarbeiterUUID;
   association _Mitarbeiter;
 
-
+action Antraggenehmigen  result [1] $self;
+  action antragablehnen    result [1] $self;
 
   field ( readonly, numbering : managed ) iduuid;
   field (readonly ) Urlaubstage;
@@ -58,6 +60,7 @@ authorization dependent by _Mitarbeiter
       lastchangedat   = last_changed_at;
       MitarbeiterUuid = mitarbeiter_uuid;
       iduuid          = id_uuid;
+
     }
 }
 
@@ -65,20 +68,18 @@ define behavior for Zss_R_Antrag //alias <alias_name>
 persistent table zss_urlaubsantr
 lock dependent by _Mitarbeiter
 authorization dependent by _Mitarbeiter
-//etag master <field_name>
+
 {
 
   update;
   delete;
   field ( readonly ) AntragstellerUUID;
   association _Mitarbeiter;
-  //association _Manager { create; }
 
-  static action datumsvalidierung;
   static action keineUrlaubstage;
   static action beschreibung;
 
-  validation ValidateDates on save { create; }
+  validation datumsvalidierung on save { create; update;}
 
   determination berechneUTage  on modify { create; update; }
   determination DetermineStatus on modify { create; update; }
@@ -104,5 +105,6 @@ authorization dependent by _Mitarbeiter
       createdat         = created_at;
       lastchangedby     = last_changed_by;
       lastchangedat     = last_changed_at;
+
     }
     }

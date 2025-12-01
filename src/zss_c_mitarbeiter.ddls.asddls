@@ -26,6 +26,9 @@ as projection on Zss_R_Mitarbeiter
       
     /* Transient Data */
     GenehmigenderName,
+    verbrauchteUrlaubstage,
+    verfuegbareUrlaubstage,
+    geplanteUrlaubstage,
       
     /* Associations */
     _Antrag : redirected to composition child Zss_C_Antrag,
