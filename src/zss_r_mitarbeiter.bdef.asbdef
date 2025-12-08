@@ -4,14 +4,12 @@ strict ( 2 );
 define behavior for Zss_R_Mitarbeiter //alias <alias_name>
 persistent table zss_mitarbeiter
 lock master
-authorization master ( instance )
+authorization master ( global )
 //etag master <field_name>
 {
-  create ( authorization : global );
-  update;
-  delete;
-  field ( readonly ) IDUUID;
-  association _Anspruch { create; }
+
+  field ( readonly, numbering: managed ) IDUUID;
+  association _Anspruch;
   association _Antrag { create; }
 
   mapping for zss_mitarbeiter corresponding
@@ -36,16 +34,14 @@ lock dependent by _Mitarbeiter
 authorization dependent by _Mitarbeiter
 //etag master <field_name>
 {
-  update;
-  delete;
+
   field ( readonly ) MitarbeiterUUID;
   association _Mitarbeiter;
 
-action Antraggenehmigen  result [1] $self;
-  action antragablehnen    result [1] $self;
+
 
   field ( readonly, numbering : managed ) iduuid;
-  field (readonly ) Urlaubstage;
+  field (readonly ) Urlaubstage, CreatedAt, CreatedBy, LastChangedAt, LastChangedBy;
 
   mapping for zss_urlaubsanspr corresponding
     {
@@ -66,15 +62,19 @@ action Antraggenehmigen  result [1] $self;
 
 define behavior for Zss_R_Antrag //alias <alias_name>
 persistent table zss_urlaubsantr
-lock dependent by _Mitarbeiter
-authorization dependent by _Mitarbeiter
+lock dependent by _Antragsteller
+authorization dependent by _Antragsteller
 
 {
 
   update;
   delete;
   field ( readonly ) AntragstellerUUID;
-  association _Mitarbeiter;
+  association _Antragsteller;
+  association _Genehmigender;
+
+    action UAntragBestaetigen result [1] $self;
+  action UAntragAblehnen result [1] $self;
 
   static action keineUrlaubstage;
   static action beschreibung;

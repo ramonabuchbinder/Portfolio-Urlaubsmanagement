@@ -1,0 +1,19 @@
+projection;
+strict ( 2 );
+
+define behavior for ZSS_C_Mitarbeiter_M //alias <alias_name>
+{
+
+  use association _Antrag;
+}
+
+define behavior for ZSS_C_AntragManager //alias <alias_name>
+{
+
+  use action UAntragBestaetigen;
+  use action UAntragAblehnen;
+
+
+  use association _Antragsteller;
+  use association _Genehmigender;
+}

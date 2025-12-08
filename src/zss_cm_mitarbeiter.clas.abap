@@ -13,7 +13,7 @@ CLASS zss_cm_mitarbeiter DEFINITION
       BEGIN OF datumsvalidierung,
         msgid TYPE symsgid      VALUE 'ZSS_Mitarbeiter',
         msgno TYPE symsgno      VALUE '001',
-        attr1 TYPE scx_attrname VALUE '',
+        attr1 TYPE scx_attrname VALUE 'Kommentar',
         attr2 TYPE scx_attrname VALUE '',
         attr3 TYPE scx_attrname VALUE '',
         attr4 TYPE scx_attrname VALUE '',
@@ -23,47 +23,47 @@ CLASS zss_cm_mitarbeiter DEFINITION
       BEGIN OF keineUrlaubstage,
         msgid TYPE symsgid      VALUE 'ZSS_Mitarbeiter',
         msgno TYPE symsgno      VALUE '002',
-        attr1 TYPE scx_attrname VALUE '',
+        attr1 TYPE scx_attrname VALUE 'Kommentar',
         attr2 TYPE scx_attrname VALUE '',
         attr3 TYPE scx_attrname VALUE '',
         attr4 TYPE scx_attrname VALUE '',
       END OF keineUrlaubstage.
 
-       CONSTANTS:
+    CONSTANTS:
       BEGIN OF erfolgreichAbgelehnt,
         msgid TYPE symsgid      VALUE 'ZSS_Mitarbeiter',
         msgno TYPE symsgno      VALUE '003',
         attr1 TYPE scx_attrname VALUE 'IdUuid',
-        attr2 TYPE scx_attrname VALUE '',
+        attr2 TYPE scx_attrname VALUE 'Kommentar',
         attr3 TYPE scx_attrname VALUE '',
         attr4 TYPE scx_attrname VALUE '',
       END OF erfolgreichAbgelehnt.
 
-       CONSTANTS:
+    CONSTANTS:
       BEGIN OF erfolgreichAngenommen,
         msgid TYPE symsgid      VALUE 'ZSS_Mitarbeiter',
         msgno TYPE symsgno      VALUE '004',
         attr1 TYPE scx_attrname VALUE 'IdUuid',
-        attr2 TYPE scx_attrname VALUE '',
+        attr2 TYPE scx_attrname VALUE 'Kommentar',
         attr3 TYPE scx_attrname VALUE '',
         attr4 TYPE scx_attrname VALUE '',
       END OF erfolgreichAngenommen.
 
-       CONSTANTS:
+    CONSTANTS:
       BEGIN OF bereitsBearbeitet,
         msgid TYPE symsgid      VALUE 'ZSS_Mitarbeiter',
-        msgno TYPE symsgno      VALUE '004',
+        msgno TYPE symsgno      VALUE '005',
         attr1 TYPE scx_attrname VALUE 'IdUuid',
-        attr2 TYPE scx_attrname VALUE '',
+        attr2 TYPE scx_attrname VALUE 'Kommentar',
         attr3 TYPE scx_attrname VALUE '',
         attr4 TYPE scx_attrname VALUE '',
       END OF bereitsBearbeitet.
 
 
     " Attributs
-    DATA urlaubstage type i.
-    data comment type string.
-    data IdUuid type zss_urlaubsantr.
+    DATA urlaubstage TYPE i.
+    DATA comment TYPE string.
+    DATA IdUuid TYPE zss_urlaubsantr.
 
 
     " Constructor
@@ -72,11 +72,13 @@ CLASS zss_cm_mitarbeiter DEFINITION
         severity  TYPE if_abap_behv_message=>t_severity DEFAULT if_abap_behv_message=>severity-error
         textid    LIKE if_t100_message=>t100key         DEFAULT if_t100_message=>default_textid
         !previous LIKE previous OPTIONAL
-        IdUuid type zss_urlaubsantr optional.
+        comment TYPE zss_kommentar OPTIONAL
+        IdUuid    TYPE zss_urlaubsantr OPTIONAL.
 
 
 
-  PROTECTED SECTION.
+
+PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -87,6 +89,7 @@ CLASS Zss_cm_mitarbeiter IMPLEMENTATION.
     if_t100_message~t100key = textid.
     if_abap_behv_message~m_severity = severity.
     me->IdUuid = IdUuid.
+    me->comment = comment.
   ENDMETHOD.
 ENDCLASS.
 

@@ -31,7 +31,7 @@ as projection on Zss_R_Mitarbeiter
     geplanteUrlaubstage,
       
     /* Associations */
-    _Antrag : redirected to composition child Zss_C_Antrag,
-    _Anspruch : redirected to composition child Zss_C_Anspruch
+   _Antrag : redirected to composition child Zss_C_Antrag,
+   _Anspruch : redirected to composition child Zss_C_Anspruch
     
 }

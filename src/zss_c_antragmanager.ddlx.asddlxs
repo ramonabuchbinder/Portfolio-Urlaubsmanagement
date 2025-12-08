@@ -15,11 +15,18 @@ annotate view ZSS_C_AntragManager with
     { id: 'Antragsdaten', position: 10, targetQualifier: 'Antragsdaten', label: 'Antragsdaten', type: #FIELDGROUP_REFERENCE },
   { id: 'AdminData', position: 20, targetQualifier: 'AdminData', label: 'Administrative Daten', type: #FIELDGROUP_REFERENCE }
 ]
+
+    @UI.lineItem:
+    [
+        { position: 10, dataAction: 'UAntragBestaetigen', label: 'Genehmigen', type: #FOR_ACTION },
+        { position: 20, dataAction: 'UAntragAblehnen', label: 'Ablehnen', type: #FOR_ACTION}
+    ]
+    IDUUID;
   /* Fields */
   @UI.lineItem: [{ position: 10 }]
   @UI.fieldGroup: [{ position: 10, qualifier: 'Antragsdaten' }]
-  @EndUserText.label: 'AntragstellerUuid'
-  AntragstellerUuid;
+  @EndUserText.label: 'Antragsteller'
+  Antragstellername;
 
   @UI.lineItem: [{ position: 20 }]
   @UI.fieldGroup: [{ position: 20, qualifier: 'Antragsdaten' }]

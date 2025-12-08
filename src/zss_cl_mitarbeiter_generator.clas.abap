@@ -88,20 +88,7 @@ CLASS ZSS_CL_MITARBEITER_GENERATOR IMPLEMENTATION.
     out->write( |Inserted Mitarbeiter: { sy-dbcnt }| ).
 
     "Create Urlaubsansprüche
-    ls_anspruch-mandant = sy-mandt.
-    TRY.
-        ls_anspruch-id_uuid = cl_system_uuid=>create_uuid_x16_static( ).
-      CATCH cx_uuid_error.
-        "handle exception
-    ENDTRY.
-    ls_anspruch-mitarbeiter_uuid = ls_mitarbeiter_hans-id_uuid.
-    ls_anspruch-jahr = 2022.
-    ls_anspruch-urlaubstage = 30.
-    ls_anspruch-created_by     = 'GENERATOR'.
-    GET TIME STAMP FIELD ls_anspruch-created_at.
-    ls_anspruch-last_changed_by = 'GENERATOR'.
-    GET TIME STAMP FIELD ls_anspruch-last_changed_at.
-    APPEND ls_anspruch TO lt_anspruch.
+
 
     ls_anspruch-mandant = sy-mandt.
     TRY.
@@ -266,8 +253,8 @@ CLASS ZSS_CL_MITARBEITER_GENERATOR IMPLEMENTATION.
     ls_urlaubsantrag-enddatum           = '20231231'.
     ls_urlaubsantrag-urlaubstage        = 3.
     ls_urlaubsantrag-kommentar          = 'Weihnachtsurlaub'.
-    ls_urlaubsantrag-status = 'B'.
-    ls_urlaubsantrag-sbeschreibung = 'Beantragt'.
+    ls_urlaubsantrag-status = 'G'.
+    ls_urlaubsantrag-sbeschreibung = 'Genehmigt'.
     ls_urlaubsantrag-created_by     = 'GENERATOR'.
     GET TIME STAMP FIELD ls_urlaubsantrag-created_at.
     ls_urlaubsantrag-last_changed_by = 'GENERATOR'.
@@ -277,6 +264,7 @@ CLASS ZSS_CL_MITARBEITER_GENERATOR IMPLEMENTATION.
     " Insert Travels
     INSERT zss_urlaubsantr FROM TABLE @lt_urlaubsantrag.
     out->write( |Inserted Urlaubsanträge: { sy-dbcnt }| ).
+
 
   ENDMETHOD.
 ENDCLASS.

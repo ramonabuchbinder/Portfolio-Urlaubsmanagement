@@ -12,7 +12,7 @@
      <SPRSL>E</SPRSL>
      <ARBGB>ZSS_MITARBEITER</ARBGB>
      <MSGNR>001</MSGNR>
-     <TEXT>Eingabe nicht möglich, da Enddatum vor Stardatum liegt</TEXT>
+     <TEXT>Eingabe nicht möglich, da Enddatum vor Stardatum liegt &amp;1</TEXT>
     </T100>
     <T100>
      <SPRSL>E</SPRSL>
@@ -37,6 +37,12 @@
      <ARBGB>ZSS_MITARBEITER</ARBGB>
      <MSGNR>005</MSGNR>
      <TEXT>Antrag &amp;1 wurde bereits bearbeitet</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZSS_MITARBEITER</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Test</TEXT>
     </T100>
    </T100>
   </asx:values>

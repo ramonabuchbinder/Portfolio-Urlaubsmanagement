@@ -8,6 +8,10 @@ as projection on Zss_R_Antrag
 {
     key IDUUID,
     AntragstellerUuid,
+    @Consumption.valueHelpDefinition: [{ entity: {name: 'ZSS_I_MitarbeiterText', element: 'Name'} }]
+    Antragstellername,
+    GenehmigenderUuid,
+    Genehmigendername,
       Startdatum,
       Enddatum,
       Urlaubstage,
@@ -24,7 +28,9 @@ as projection on Zss_R_Antrag
       LastChangedAt,
       
       
+      
       /*Assosiations*/
-      _Mitarbeiter : redirected to parent ZSS_C_Mitarbeiter_M
+     _Antragsteller: redirected to parent ZSS_C_Mitarbeiter_M,
+  _Genehmigender: redirected to ZSS_C_Mitarbeiter_M
       
 }

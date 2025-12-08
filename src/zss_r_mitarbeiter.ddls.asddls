@@ -9,6 +9,10 @@ define root view entity Zss_R_Mitarbeiter
   association[1..1] to ZSS_I_geplanteUTage as _geplant on $projection.IDUUID = _geplant.antragsteller
   association[1..1] to ZSS_I_verbrauchteUTage as _verbraucht on $projection.IDUUID = _verbraucht.antragsteller
   association[1..1] to ZSS_I_verfuegbareUTage as _verfuegbar on $projection.IDUUID = _verfuegbar.antragsteller
+  association[1..*] to Zss_R_Antrag as _Antragsteller on $projection.IDUUID = _Antragsteller.AntragstellerUuid
+  association[1..*] to Zss_R_Antrag as _Genehmigender on $projection.IDUUID = _Genehmigender.GenehmigenderUuid
+  association[1..1] to ZSS_I_MitarbeiterText as _MitarbeiterText on $projection.IDUUID = _MitarbeiterText.IDUUID
+  
 {
   @ObjectModel.text.element: ['GenehmigenderName']
   key id_uuid       as IDUUID,
@@ -37,5 +41,9 @@ define root view entity Zss_R_Mitarbeiter
       
       /* Associations*/
       _Antrag,
-      _Anspruch
+      _Anspruch,
+      _Antragsteller,
+      _Genehmigender,
+      
+      _MitarbeiterText.Name as Mitarbeitername
 }

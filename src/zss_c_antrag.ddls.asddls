@@ -5,8 +5,11 @@ define view entity Zss_C_Antrag as projection on Zss_R_Antrag
 {
     key IDUUID,
  AntragstellerUuid,
+ @Search.defaultSearchElement: true
+ Antragstellername,
 @Consumption.valueHelpDefinition: [{ entity: { name: 'Zss_I_Genehmigender', element: 'IDUUID' } }]
  GenehmigenderUuid,
+ Genehmigendername,
   Startdatum,
   Enddatum,
   Urlaubstage,
@@ -15,6 +18,7 @@ define view entity Zss_C_Antrag as projection on Zss_R_Antrag
   Beschreibung,
   
   /* Assosiations*/
-  _Mitarbeiter : redirected to parent Zss_C_Mitarbeiter
+  _Antragsteller: redirected to parent Zss_C_Mitarbeiter,
+ _Genehmigender: redirected to Zss_C_Mitarbeiter
  
 }   

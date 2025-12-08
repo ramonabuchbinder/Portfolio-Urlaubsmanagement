@@ -9,6 +9,10 @@ as projection on Zss_R_Mitarbeiter
   Vorname,
   Nachname,
   Eintrittsdatum,
+  Mitarbeitername,
+  verbrauchteUrlaubstage,
+  verfuegbareUrlaubstage,
+  geplanteUrlaubstage,
   
     /* Administrative Data */
       CreatedBy,
