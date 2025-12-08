@@ -7,8 +7,8 @@ CLASS lhc_Zss_R_Mitarbeiter DEFINITION INHERITING FROM cl_abap_behavior_handler.
     METHODS get_global_authorizations_a FOR GLOBAL AUTHORIZATION
       IMPORTING REQUEST requested_authorizations FOR zss_r_antrag RESULT result.
 
-    METHODS keineUrlaubstage FOR MODIFY
-      IMPORTING keys FOR ACTION ZSS_R_Antrag~keineUrlaubstage.
+    METHODS keineUrlaubstage FOR VALIDATE ON SAVE
+      IMPORTING keys FOR ZSS_R_Antrag~keineUrlaubstage.
 
     METHODS datumsvalidierung FOR VALIDATE ON SAVE
       IMPORTING keys FOR ZSS_R_Antrag~datumsvalidierung.
@@ -130,8 +130,42 @@ CLASS lhc_Zss_R_Mitarbeiter IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD keineurlaubstage.
+    DATA nachricht TYPE REF TO zss_cm_mitarbeiter.
 
+    " Read Travels
+    READ ENTITY IN LOCAL MODE zss_R_antrag
+         FIELDS ( Startdatum Enddatum Antragstellername )
+         WITH CORRESPONDING #( keys )
+         RESULT DATA(lt_antrag).
+
+    " Process Travels
+    LOOP AT lt_antrag INTO DATA(ls_antrag).
+      TRY.
+          DATA(startdatum) = ls_antrag-startdatum.
+          startdatum -= 1.
+          DATA(calendar) = cl_fhc_calendar_runtime=>create_factorycalendar_runtime( 'SAP_DE_BW' ).
+          DATA(working_days) = calendar->calc_workingdays_between_dates( iv_start = startdatum
+                                                                         iv_end   = ls_antrag-Enddatum ).
+        CATCH cx_fhc_runtime.
+      ENDTRY.
+
+      SELECT FROM ZSS_R_Mitarbeiter
+           FIELDS  verfuegbareUrlaubstage
+           WHERE IDuuid = @ls_antrag-Antragstelleruuid
+           INTO @DATA(verfuegbareUrlaubstage).
+      ENDSELECT.
+
+      IF verfuegbareUrlaubstage < working_days.
+        nachricht = NEW zss_cm_Mitarbeiter( textid   = zss_cm_Mitarbeiter=>keineUrlaubstage
+                                          severity = if_abap_behv_message=>severity-error ).
+        APPEND VALUE #( %tky = ls_antrag-%tky
+                        %msg = nachricht ) TO reported-zss_r_antrag.
+        APPEND VALUE #( %tky = ls_antrag-%tky ) TO failed-zss_r_antrag.
+      ENDIF.
+    ENDLOOP.
   ENDMETHOD.
+
+
 
   METHOD UAntragBestaetigen.
     DATA nachricht TYPE REF TO zss_cm_mitarbeiter.

@@ -76,7 +76,7 @@ authorization dependent by _Antragsteller
     action UAntragBestaetigen result [1] $self;
   action UAntragAblehnen result [1] $self;
 
-  static action keineUrlaubstage;
+  validation keineUrlaubstage on save {create; update; }
   static action beschreibung;
 
   validation datumsvalidierung on save { create; update;}
